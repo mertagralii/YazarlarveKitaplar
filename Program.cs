@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using System;
+using YazarlarveKitaplar.Data;
 
 namespace YazarlarveKitaplar
 {

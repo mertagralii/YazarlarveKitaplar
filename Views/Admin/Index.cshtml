@@ -1,10 +1,10 @@
 ﻿@model List<YazarKitapViewModel>
-
 @{
-	ViewData["Title"] = "Home Page";
+	ViewData["Title"] = "Admin Page";
 }
 <div class="container mt-4">
 	<h2 class="text-center">Yazarlar Ve Kitaplar</h2>
+
 	<!-- Teklif Listesi -->
 	<div class="row mt-4">
 		<div class="col-md-12">
@@ -19,6 +19,8 @@
 							}
 							break;
 						}
+
+
 					</tr>
 				</thead>
 				<tbody>
@@ -36,16 +38,31 @@
 
 										<p class="mb-0">@kitap.Description</p>
 									</div>
+
+									<div class="mt-1">
+										<a href="/Home/UpdateTeklif/@kitap.Id" class="btn btn-primary">Güncelle</a>
+										<a href="/Home/DeleteTeklif/@kitap.Id" class="btn btn-danger" onclick="return confirm('Silmek İstediğinize emin misiniz?')">Sil</a>
+									</div>
 								</td>
+
+
 								}
+
 							}
 							break;
 						}
+
+
 					}
+
+
 				</tbody>
 			</table>
 		</div>
 	</div>
+
+
+
 	<!-- Yazarlar & Kitaplar Listesi -->
 	<div class="row mt-4">
 		<div class="col-md-6">
@@ -55,7 +72,7 @@
 					<tr>
 						<th>Id</th>
 						<th>Yazar Adi Soyadi</th>
-						<th>Yaşı</th>
+						<th>İşlem</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -66,7 +83,7 @@
 							<tr>
 								<td>@yazar.Id</td>
 								<td>@yazar.Name @yazar.Surname</td>
-								<td>@yazar.Age</td>
+								<td><a href="/Home/UpdateYazar/@yazar.Id">güncelle</a> / <a href="/Home/DeleteDurum/@yazar.Id" onclick="return confirm('Silmek İstediğinize emin misiniz?')">sil</a></td>
 							</tr>
 						}
 						break;
@@ -83,6 +100,7 @@
 						<th>Id</th>
 						<th>Kitap Adı</th>
 						<th>Kitap Açıklaması</th>
+						<th>İşlem</th>
 					</tr>
 				</thead>
 				<tbody>
@@ -94,10 +112,12 @@
 								<td>@kitap.Id</td>
 								<td>@kitap.Name</td>
 								<td>@kitap.Description</td>
+								<td><a href="/Home/UpdateKitap/@kitap.Id">güncelle</a> / <a href="/Home/DeleteKitap/@kitap.Id" onclick="return confirm('Silmek İstediğinize emin misiniz?')">sil</a></td>
 							</tr>
 						}
 						break;
 					}
+
 				</tbody>
 			</table>
 		</div>

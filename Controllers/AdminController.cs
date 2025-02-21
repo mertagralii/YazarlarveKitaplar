@@ -15,11 +15,9 @@ namespace YazarlarveKitaplar.Controllers
         }
         public IActionResult Index()
         {
-            var yazarlar = _context.Yazarlar.Include(y => y.Kitaplar).ToList();
-            var kitaplar = _context.Kitaplar.Include(k => k.Yazar).ToList();
-
-            ViewBag.Yazarlar = yazarlar;
-            ViewBag.Kitaplar = kitaplar;
+           
+            ViewBag.Yazarlar = _context.Yazarlar.Include(y => y.Kitaplar).ToList();
+            ViewBag.Kitaplar = _context.Kitaplar.Include(k => k.Yazar).ToList();
 
 
             return View();
@@ -28,8 +26,13 @@ namespace YazarlarveKitaplar.Controllers
         [HttpPost]
         public IActionResult InsertKitap(Kitap kitaplar) 
         {
+            if (!ModelState.IsValid)
+            {
+               return RedirectToAction("Index");
+            }
             _context.Kitaplar.Add(kitaplar);
             _context.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
@@ -38,26 +41,35 @@ namespace YazarlarveKitaplar.Controllers
         {
             var selectedKitap = _context.Kitaplar.Find(Id);
 
+            if (selectedKitap == null) 
+            {
+                return RedirectToAction("Index");
+            }
+
             return View(selectedKitap); 
         }
         [HttpPost]
         public IActionResult UpdateKitap(Kitap kitaplar)
         {
-            var updateKitap = _context.Kitaplar.Find(kitaplar.Id);
-            if (updateKitap != null)
+
+            if (!ModelState.IsValid)
             {
-                updateKitap.Name = kitaplar.Name;
-                updateKitap.Description = kitaplar.Description;
-                updateKitap.YazarId = kitaplar.YazarId;
-                _context.SaveChanges();
-               
+                return RedirectToAction("Index");
+
             }
+
+            kitaplar.Name = kitaplar.Name;
+            kitaplar.Description = kitaplar.Description;
+            kitaplar.YazarId = kitaplar.YazarId;
+            _context.SaveChanges();
+
             return RedirectToAction("Index");
 
         }
         public IActionResult DeleteKitap(int Id)
         {
             var selectKitap = _context.Kitaplar.Find(Id);
+
             if (selectKitap != null) 
             {
                 _context.Kitaplar.Remove(selectKitap);
@@ -69,73 +81,101 @@ namespace YazarlarveKitaplar.Controllers
         [HttpPost]
         public IActionResult InsertYazar(Yazar yazar) 
         {
+            if (!ModelState.IsValid)
+            {
+                return RedirectToAction("Index");
+            }
+
             _context.Yazarlar.Add(yazar);
             _context.SaveChanges();
+
             return RedirectToAction("Index");
         }
 
         public IActionResult UpdateYazar(int Id)
         {
             var yazar = _context.Yazarlar.Find(Id);
+
+            if (yazar == null)
+            {
+                return RedirectToAction("Index");
+            }
+
             return View(yazar);
         }
 
         [HttpPost]
         public IActionResult UpdateYazar(Yazar yazar) 
         {
-           var updateYazar = _context.Yazarlar.Find(yazar.Id);
-            if (updateYazar != null)
+          
+            if (!ModelState.IsValid)
             {
-                updateYazar.Name = yazar.Name;
-                updateYazar.Surname = yazar.Surname;
-                updateYazar.Age = yazar.Age;
-                _context.SaveChanges();
-            }
                 return RedirectToAction("Index");
+            }
+
+            yazar.Name = yazar.Name;
+            yazar.Surname = yazar.Surname;
+            yazar.Age = yazar.Age;
+            _context.SaveChanges();
+
+            return RedirectToAction("Index");
         }
 
         public IActionResult DeleteYazar(int Id)
         {
             var yazar = _context.Yazarlar.Find(Id);
-            _context.Yazarlar.Remove(yazar);
-            _context.SaveChanges();
+
+            if (yazar != null)
+            {
+                _context.Yazarlar.Remove(yazar);
+                _context.SaveChanges();
+            }
+
+
             return RedirectToAction("Index");
         }
         [HttpGet]
-        public IActionResult UpdateTable(int Id) 
+        public IActionResult UpdateTable(int id) 
         {
 
-            var findTable = _context.Kitaplar.Find(Id);
+            var kitap = _context.Kitaplar
+               .Include(k => k.Yazar)
+               .FirstOrDefault(k => k.Id == id);
 
-            var yazarlar = _context.Yazarlar.ToList();
-
-            var model = new UpdateTableViewModel
+            if (kitap == null)
             {
-                Yazarlar = yazarlar,
-                Kitap = findTable
-            };
+                return RedirectToAction("Index");
+            }
 
-            return View(model);
+            ViewBag.Yazarlar = _context.Yazarlar
+                .Include(k => k.Kitaplar)
+                .ToList();
+
+            return View(kitap);
         }
 
         [HttpPost]
         public IActionResult UpdateTable(Kitap kitaplar)
         {
-            var updateTable = _context.Kitaplar.Find(kitaplar.Id);
-            if (updateTable != null)
+           
+            if (!ModelState.IsValid)
             {
-                updateTable.Name = kitaplar.Name;
-                updateTable.Description = kitaplar.Description;
-                updateTable.YazarId = kitaplar.YazarId;
-                _context.SaveChanges();
+                return RedirectToAction("Index");
             }
+            _context.Kitaplar.Update(kitaplar);
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
         public IActionResult DeleteTable(int Id) 
         {
             var table = _context.Kitaplar.Find(Id);
-            _context.Kitaplar.Remove(table);
-            _context.SaveChanges();
+            if (table != null)
+            {
+                _context.Kitaplar.Remove(table);
+                _context.SaveChanges();
+                
+            }
+           
             return RedirectToAction("Index");
 
         }

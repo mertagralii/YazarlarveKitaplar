@@ -1,0 +1,23 @@
+﻿@model UpdateTableViewModel
+<div class="col-md-6">
+	<h5>Kitap Ekle</h5>
+	<form action="/Admin/UpdateTable" method="post" autocomplete="off">
+		<input type="hidden" name="Id" value="@Model.Kitap.Id" />
+		<select class="form-control mb-2" name="YazarId">
+			@foreach (var yazarlar in Model.Yazarlar)
+			{
+				@if (yazarlar.Id == Model.Kitap.YazarId)
+				{
+					<option selected value="@yazarlar.Id">@yazarlar.Name @yazarlar.Surname</option>
+				}
+				else
+				{
+					<option value="@yazarlar.Id">@yazarlar.Name @yazarlar.Surname</option>
+				}
+			}
+		</select>
+		<input type="text" class="form-control mb-2" placeholder="Kitabın Adını Giriniz" name="Name" required value="@Model.Kitap.Name">
+		<input type="text" class="form-control mb-2" placeholder="Kitabın Açıklamasını Giriniz" name="Description" required value="@Model.Kitap.Description">
+		<button class="btn btn-primary w-100">Kitap Ekle</button>
+	</form>
+</div>

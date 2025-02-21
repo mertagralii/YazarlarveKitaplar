@@ -15,19 +15,20 @@ namespace YazarlarveKitaplar.Controllers
         }
         public IActionResult Index()
         {
-            var query = from kitap in _context.Kitaplar
-                        join yazar in _context.Yazarlar
-                        on kitap.YazarId equals yazar.Id
-                        select new YazarKitapViewModel
-                        {
-                            Id = yazar.Id,
-                            YazarName = yazar.Name,
-                            YazarSurname = yazar.Surname,
-                            KitapId = kitap.Id,
-                            YazarId = kitap.YazarId,
-                            KitapName = kitap.Name,
-                            KitapDescription = kitap.Description
-                        };
+          var query = _context.Kitaplar
+                 .Join(_context.Yazarlar,
+                              k => k.YazarId,
+                              y => y.Id,
+                              (k, y) => new YazarKitapViewModel
+                              {
+                                  Id = y.Id,
+                                  YazarName = y.Name,
+                                  YazarSurname = y.Surname,
+                                  KitapId = k.Id,
+                                  YazarId = k.YazarId,
+                                  KitapName = k.Name,
+                                  KitapDescription = k.Description
+                              });
 
             var yazarlar = _context.Yazarlar.ToList();
 
@@ -43,20 +44,46 @@ namespace YazarlarveKitaplar.Controllers
             return View(model);
         }
 
-        
-        public IActionResult InsertKitap() 
+        [HttpPost]
+        public IActionResult InsertKitap(Kitaplar kitaplar) 
         {
-           
+            _context.Kitaplar.Add(kitaplar);
+            _context.SaveChanges();
             return RedirectToAction("Index");
         }
 
-        public IActionResult UpdateKitap() 
+        [HttpGet]
+        public IActionResult UpdateKitap(int Id) 
         {
-            return View(); 
+            var selectedKitap = _context.Kitaplar.Find(Id);
+
+            return View(selectedKitap); 
         }
-        public IActionResult DeleteKitap()
+        [HttpPost]
+        public IActionResult UpdateKitap(Kitaplar kitaplar)
         {
-            return View();
+            var updateKitap = _context.Kitaplar.Find(kitaplar.Id);
+            if (updateKitap != null)
+            {
+                updateKitap.Name = kitaplar.Name;
+                updateKitap.Description = kitaplar.Description;
+                updateKitap.YazarId = kitaplar.YazarId;
+                _context.SaveChanges();
+               
+            }
+            return RedirectToAction("Index");
+
+        }
+        public IActionResult DeleteKitap(int Id)
+        {
+            var selectKitap = _context.Kitaplar.Find(Id);
+            if (selectKitap != null) 
+            {
+                _context.Kitaplar.Remove(selectKitap);
+                _context.SaveChanges();
+            }
+
+            return RedirectToAction("Index");
         }
         [HttpPost]
         public IActionResult InsertYazar(Yazarlar yazar) 
@@ -93,10 +120,35 @@ namespace YazarlarveKitaplar.Controllers
             _context.SaveChanges();
             return RedirectToAction("Index");
         }
-
-        public IActionResult UpdateTable() 
+        [HttpGet]
+        public IActionResult UpdateTable(int Id) 
         {
-            return View();
+
+            var findTable = _context.Kitaplar.Find(Id);
+
+            var yazarlar = _context.Yazarlar.ToList();
+
+            var model = new UpdateTableViewModel
+            {
+                Yazarlar = yazarlar,
+                Kitap = findTable
+            };
+
+            return View(model);
+        }
+
+        [HttpPost]
+        public IActionResult UpdateTable(Kitaplar kitaplar)
+        {
+            var updateTable = _context.Kitaplar.Find(kitaplar.Id);
+            if (updateTable != null)
+            {
+                updateTable.Name = kitaplar.Name;
+                updateTable.Description = kitaplar.Description;
+                updateTable.YazarId = kitaplar.YazarId;
+                _context.SaveChanges();
+            }
+            return RedirectToAction("Index");
         }
         public IActionResult DeleteTable(int Id) 
         {

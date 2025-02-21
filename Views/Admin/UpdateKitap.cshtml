@@ -1,0 +1,12 @@
+﻿@model Kitaplar	
+
+<div class="col-md-6">
+	<h5>Kitap Güncelle</h5>
+	<form action="/Admin/UpdateKitap" method="post" autocomplete="off">
+		<input type="hidden" name="Id" value="@Model.Id" />
+		<input type="hidden" name="YazarId" value="@Model.YazarId"/>
+		<input type="text" class="form-control mb-2" placeholder="Kitabın Adını Giriniz" name="Name" required value="@Model.Name">
+		<input type="text" class="form-control mb-2" placeholder="Kitabın Açıklamasını Giriniz" name="Description" required value="@Model.Description">
+		<button class="btn btn-primary w-100">Kitap Güncelle</button>
+	</form>
+</div>

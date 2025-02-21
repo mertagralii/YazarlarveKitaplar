@@ -32,8 +32,8 @@
 									</div>
 
 									<div class="mt-1">
-										<a href="/Admin/UpdateTable/@kitap.Id" class="btn btn-primary">Güncelle</a>
-										<a href="/Admin/DeleteTable/@kitap.Id" class="btn btn-danger" onclick="return confirm('Silmek İstediğinize emin misiniz?')">Sil</a>
+										<a href="/Admin/UpdateTable/@kitap.KitapId" class="btn btn-primary">Güncelle</a>
+										<a href="/Admin/DeleteTable/@kitap.KitapId" class="btn btn-danger" onclick="return confirm('Silmek İstediğinize emin misiniz?')">Sil</a>
 									</div>
 								}
 
@@ -68,7 +68,7 @@
 					} 
 				</select>
 				<input type="text" class="form-control mb-2" placeholder="Kitabın Adını Giriniz" name="Name" required>
-				<input type="number" class="form-control mb-2" placeholder="Kitabın Açıklamasını Giriniz" name="Description" required>
+				<input type="text" class="form-control mb-2" placeholder="Kitabın Açıklamasını Giriniz" name="Description" required>
 				<button class="btn btn-primary w-100">Kitap Ekle</button>
 			</form>
 		</div>

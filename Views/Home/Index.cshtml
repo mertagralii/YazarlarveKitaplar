@@ -1,4 +1,4 @@
-﻿@model List<YazarKitapViewModel>
+﻿@model IndexViewModel
 
 @{
 	ViewData["Title"] = "Home Page";
@@ -11,36 +11,28 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						@foreach (var item in Model)
+						@foreach (var yazar in Model.Yazarlar)
 						{
-							@foreach (var yazar in item.Yazarlar)
-							{
-								<td>@yazar.Name @yazar.Surname</td>
-							}
-							break;
+							<td>@yazar.Name @yazar.Surname</td>
 						}
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var item in Model)
+					@foreach (var yazar in Model.Yazarlar)
 					{
-						@foreach (var yazar in item.Yazarlar)
-						{
-							@foreach (var kitap in item.Kitaplar)
+					<td>
+							@foreach (var kitap in Model.YazarKitapViewModel)
 							{
-								@if (item.YazarId == kitap.Id)
+								@if (kitap.YazarId == yazar.Id)
 								{
-								<td>
-									<div class="d-flex flex-column">
-										<p class="mb-0 fw-bold">@kitap.Name</p>
+								<div class="d-flex flex-column">
+									<p class="mb-0 fw-bold">@kitap.KitapName</p>
 
-										<p class="mb-0">@kitap.Description</p>
-									</div>
-								</td>
+									<p class="mb-0">@kitap.KitapDescription</p>
+								</div>
 								}
 							}
-							break;
-						}
+					</td>
 					}
 				</tbody>
 			</table>
@@ -59,19 +51,14 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var item in Model)
+					@foreach (var yazar in Model.Yazarlar)
 					{
-						@foreach (var yazar in item.Yazarlar)
-						{
-							<tr>
-								<td>@yazar.Id</td>
-								<td>@yazar.Name @yazar.Surname</td>
-								<td>@yazar.Age</td>
-							</tr>
-						}
-						break;
+						<tr>
+							<td>@yazar.Id</td>
+							<td>@yazar.Name @yazar.Surname</td>
+							<td>@yazar.Age</td>
+						</tr>
 					}
-
 				</tbody>
 			</table>
 		</div>
@@ -86,17 +73,13 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var item in Model)
+					@foreach (var kitaplar in Model.Kitaplar)
 					{
-						@foreach (var kitap in item.Kitaplar)
-						{
-							<tr>
-								<td>@kitap.Id</td>
-								<td>@kitap.Name</td>
-								<td>@kitap.Description</td>
-							</tr>
-						}
-						break;
+						<tr>
+							<td>@kitaplar.Id</td>
+							<td>@kitaplar.Name</td>
+							<td>@kitaplar.Description</td>
+						</tr>
 					}
 				</tbody>
 			</table>

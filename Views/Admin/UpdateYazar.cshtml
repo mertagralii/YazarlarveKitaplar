@@ -1,0 +1,13 @@
+﻿@model Yazarlar
+<div class="row mt-4">
+	<div class="col-md-12">
+		<h5>Yazar Güncelle</h5>
+		<form action="/Admin/UpdateYazar" method="post" autocomplete="off">
+			<input type="hidden" name="Id" value="@Model.Id" />
+			<input type="text" class="form-control mb-2" placeholder="Yazarın Adı" name="Name" required value="@Model.Name">
+			<input type="text" class="form-control mb-2" placeholder="Yazarın Soyadı" name="Surname" required value="@Model.Surname">
+			<input type="number" class="form-control mb-2" placeholder="Yazarın Yaşı" name="Age" required value="@Model.Age">
+			<button class="btn btn-primary w-100">Yazar Güncelle</button>
+		</form>
+	</div>
+</div>

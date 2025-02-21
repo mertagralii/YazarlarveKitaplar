@@ -15,37 +15,18 @@ namespace YazarlarveKitaplar.Controllers
         }
         public IActionResult Index()
         {
-          var query = _context.Kitaplar
-                 .Join(_context.Yazarlar,
-                              k => k.YazarId,
-                              y => y.Id,
-                              (k, y) => new YazarKitapViewModel
-                              {
-                                  Id = y.Id,
-                                  YazarName = y.Name,
-                                  YazarSurname = y.Surname,
-                                  KitapId = k.Id,
-                                  YazarId = k.YazarId,
-                                  KitapName = k.Name,
-                                  KitapDescription = k.Description
-                              });
+            var yazarlar = _context.Yazarlar.Include(y => y.Kitaplar).ToList();
+            var kitaplar = _context.Kitaplar.Include(k => k.Yazar).ToList();
 
-            var yazarlar = _context.Yazarlar.ToList();
+            ViewBag.Yazarlar = yazarlar;
+            ViewBag.Kitaplar = kitaplar;
 
-            var kitaplar = _context.Kitaplar.ToList();
 
-            var model = new IndexViewModel
-            {
-                YazarKitapViewModel = query.ToList(),
-                Yazarlar = yazarlar,
-                Kitaplar = kitaplar
-            };
-
-            return View(model);
+            return View();
         }
 
         [HttpPost]
-        public IActionResult InsertKitap(Kitaplar kitaplar) 
+        public IActionResult InsertKitap(Kitap kitaplar) 
         {
             _context.Kitaplar.Add(kitaplar);
             _context.SaveChanges();
@@ -60,7 +41,7 @@ namespace YazarlarveKitaplar.Controllers
             return View(selectedKitap); 
         }
         [HttpPost]
-        public IActionResult UpdateKitap(Kitaplar kitaplar)
+        public IActionResult UpdateKitap(Kitap kitaplar)
         {
             var updateKitap = _context.Kitaplar.Find(kitaplar.Id);
             if (updateKitap != null)
@@ -86,7 +67,7 @@ namespace YazarlarveKitaplar.Controllers
             return RedirectToAction("Index");
         }
         [HttpPost]
-        public IActionResult InsertYazar(Yazarlar yazar) 
+        public IActionResult InsertYazar(Yazar yazar) 
         {
             _context.Yazarlar.Add(yazar);
             _context.SaveChanges();
@@ -100,7 +81,7 @@ namespace YazarlarveKitaplar.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateYazar(Yazarlar yazar) 
+        public IActionResult UpdateYazar(Yazar yazar) 
         {
            var updateYazar = _context.Yazarlar.Find(yazar.Id);
             if (updateYazar != null)
@@ -138,7 +119,7 @@ namespace YazarlarveKitaplar.Controllers
         }
 
         [HttpPost]
-        public IActionResult UpdateTable(Kitaplar kitaplar)
+        public IActionResult UpdateTable(Kitap kitaplar)
         {
             var updateTable = _context.Kitaplar.Find(kitaplar.Id);
             if (updateTable != null)

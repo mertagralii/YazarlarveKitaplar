@@ -4,8 +4,8 @@
     {
         public List<YazarKitapViewModel> YazarKitapViewModel { get; set; }
 
-        public List<Yazarlar> Yazarlar { get; set; }
+        public List<Yazar> Yazarlar { get; set; }
 
-        public List<Kitaplar> Kitaplar { get; set; }
+        public List<Kitap> Kitaplar { get; set; }
     }
 }

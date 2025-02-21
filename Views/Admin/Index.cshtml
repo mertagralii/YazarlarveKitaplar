@@ -1,4 +1,4 @@
-﻿@model IndexViewModel
+﻿
 @{
 	ViewData["Title"] = "Admin Page";
 }
@@ -11,29 +11,29 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						@foreach (var yazar in Model.Yazarlar)
+						@foreach (var yazar in ViewBag.Yazarlar)
 						{
 							<td>@yazar.Name @yazar.Surname</td>
 						}
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var yazar in Model.Yazarlar)
+					@foreach (var yazar in ViewBag.Yazarlar)
 					{
 					<td>
-							@foreach (var kitap in Model.YazarKitapViewModel)
+							@foreach (var kitap in ViewBag.Kitaplar)
 							{
 								@if (yazar.Id == kitap.YazarId)
 								{
 									<div class="d-flex flex-column mt-4">
-										<p class="mb-0 fw-bold">@kitap.KitapName</p>
+										<p class="mb-0 fw-bold">@kitap.Name</p>
 
-										<p class="mb-0">@kitap.KitapDescription</p>
+										<p class="mb-0">@kitap.Description</p>
 									</div>
 
 									<div class="mt-1">
-										<a href="/Admin/UpdateTable/@kitap.KitapId" class="btn btn-primary">Güncelle</a>
-										<a href="/Admin/DeleteTable/@kitap.KitapId" class="btn btn-danger" onclick="return confirm('Silmek İstediğinize emin misiniz?')">Sil</a>
+										<a href="/Admin/UpdateTable/@kitap.Id" class="btn btn-primary">Güncelle</a>
+										<a href="/Admin/DeleteTable/@kitap.Id" class="btn btn-danger" onclick="return confirm('Silmek İstediğinize emin misiniz?')">Sil</a>
 									</div>
 								}
 
@@ -62,7 +62,7 @@
 			<form action="/Admin/InsertKitap" method="post" autocomplete="off">
 				<select class="form-control mb-2" name="YazarId">
 					<option value="" selected disabled>Yazar Seçim Yapınız</option>
-					 @foreach (var yazarlar in Model.Yazarlar)
+					@foreach (var yazarlar in ViewBag.Yazarlar)
 					{
 						<option value="@yazarlar.Id">@yazarlar.Name @yazarlar.Surname</option>
 					} 
@@ -89,7 +89,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var yazar in Model.Yazarlar)
+					@foreach (var yazar in ViewBag.Yazarlar)
 					{
 						<tr>
 							<td>@yazar.Id</td>
@@ -114,7 +114,7 @@
 				</thead>
 				<tbody>
 
-					@foreach (var kitap in Model.Kitaplar)
+					@foreach (var kitap in ViewBag.Kitaplar)
 					{
 						<tr>
 							<td>@kitap.Id</td>

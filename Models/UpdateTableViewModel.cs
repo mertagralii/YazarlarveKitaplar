@@ -2,8 +2,8 @@
 {
     public class UpdateTableViewModel
     {
-        public List<Yazarlar> Yazarlar { get; set; }
+        public List<Yazar> Yazarlar { get; set; }
 
-        public Kitaplar Kitap { get; set; }
+        public Kitap Kitap { get; set; }
     }
 }

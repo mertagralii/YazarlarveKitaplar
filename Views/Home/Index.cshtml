@@ -1,5 +1,4 @@
-﻿@model IndexViewModel
-
+﻿
 @{
 	ViewData["Title"] = "Home Page";
 }
@@ -11,24 +10,24 @@
 			<table class="table table-bordered">
 				<thead>
 					<tr>
-						@foreach (var yazar in Model.Yazarlar)
+						@foreach (var yazar in ViewBag.Yazarlar)
 						{
 							<td>@yazar.Name @yazar.Surname</td>
 						}
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var yazar in Model.Yazarlar)
+					@foreach (var yazar in ViewBag.Yazarlar)
 					{
 					<td>
-							@foreach (var kitap in Model.YazarKitapViewModel)
+							@foreach (var kitap in ViewBag.Kitaplar)
 							{
 								@if (kitap.YazarId == yazar.Id)
 								{
 								<div class="d-flex flex-column">
-									<p class="mb-0 fw-bold">@kitap.KitapName</p>
+									<p class="mb-0 fw-bold">@kitap.Name</p>
 
-									<p class="mb-0">@kitap.KitapDescription</p>
+									<p class="mb-0">@kitap.Description</p>
 								</div>
 								}
 							}
@@ -51,7 +50,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var yazar in Model.Yazarlar)
+					@foreach (var yazar in ViewBag.Yazarlar)
 					{
 						<tr>
 							<td>@yazar.Id</td>
@@ -73,7 +72,7 @@
 					</tr>
 				</thead>
 				<tbody>
-					@foreach (var kitaplar in Model.Kitaplar)
+					@foreach (var kitaplar in ViewBag.Kitaplar)
 					{
 						<tr>
 							<td>@kitaplar.Id</td>

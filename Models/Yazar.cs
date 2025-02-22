@@ -9,6 +9,6 @@
         public string Surname { get; set; }
 
         public int  Age  { get; set; }
-        public List<Kitap> Kitaplar { get; set; }
+        public List<Kitap>? Kitaplar { get; set; }
     }
 }

@@ -10,7 +10,7 @@
 
         public string Description { get; set; }
 
-        public Yazar Yazar { get; set; }
+        public Yazar? Yazar { get; set; }
 
 
     }

@@ -28,11 +28,12 @@ namespace YazarlarveKitaplar.Controllers
         {
             if (!ModelState.IsValid)
             {
-               return RedirectToAction("Index");
+                TempData["InsertKitapWrong"] = "Kitap Ekleme İşlemi Gerçekleştirilemedi.";
+                return RedirectToAction("Index");
             }
             _context.Kitaplar.Add(kitaplar);
             _context.SaveChanges();
-
+            TempData["InsertKitap"] = "Kitap Ekleme İşlemi Başarıyla Gerçekleştirildi.";
             return RedirectToAction("Index");
         }
 
@@ -43,6 +44,7 @@ namespace YazarlarveKitaplar.Controllers
 
             if (selectedKitap == null) 
             {
+                TempData["UpdateKitapGetWrong"] = "Kitap'a ait bilgi bulunamadı.";
                 return RedirectToAction("Index");
             }
 
@@ -54,15 +56,17 @@ namespace YazarlarveKitaplar.Controllers
 
             if (!ModelState.IsValid)
             {
+                TempData["UpdateKitapWrong"] = "Kitap Güncelleme İşlemi Gerçekleştirilemedi.";
                 return RedirectToAction("Index");
 
             }
+            var selectedKitap = _context.Kitaplar.Find(kitaplar.Id);
 
-            kitaplar.Name = kitaplar.Name;
-            kitaplar.Description = kitaplar.Description;
-            kitaplar.YazarId = kitaplar.YazarId;
+            selectedKitap.Name = kitaplar.Name;
+            selectedKitap.Description = kitaplar.Description;
+            selectedKitap.YazarId = kitaplar.YazarId;
             _context.SaveChanges();
-
+            TempData["UpdateKitap"] = "Kitap Güncelleme İşlemi Başarıyla Gerçekleştirildi.";
             return RedirectToAction("Index");
 
         }
@@ -72,10 +76,13 @@ namespace YazarlarveKitaplar.Controllers
 
             if (selectKitap != null) 
             {
+                
                 _context.Kitaplar.Remove(selectKitap);
                 _context.SaveChanges();
+                TempData["DeleteKitap"] = "Kitap Silme İşlemi Başarıyla Gerçekleştirildi.";
+                return RedirectToAction("Index");
             }
-
+            TempData["DeleteKitapWrong"] = "Kitap Silme İşlemi  Gerçekleştirilemedi.";
             return RedirectToAction("Index");
         }
         [HttpPost]
@@ -83,12 +90,13 @@ namespace YazarlarveKitaplar.Controllers
         {
             if (!ModelState.IsValid)
             {
+                TempData["InsertYazarWrong"] = "Yazar Ekleme İşlemi  Gerçekleştirilemedi.";
                 return RedirectToAction("Index");
             }
 
             _context.Yazarlar.Add(yazar);
             _context.SaveChanges();
-
+            TempData["InsertYazar"] = "Yazar Ekleme İşlemi  Başarıyla Gerçekleştirildi.";
             return RedirectToAction("Index");
         }
 
@@ -98,6 +106,7 @@ namespace YazarlarveKitaplar.Controllers
 
             if (yazar == null)
             {
+                TempData["UpdateYazarGetWrong"] = "Yazar ait bilgi Bulunamadı.";
                 return RedirectToAction("Index");
             }
 
@@ -110,13 +119,19 @@ namespace YazarlarveKitaplar.Controllers
           
             if (!ModelState.IsValid)
             {
+                TempData["UpdateYazarWrong"] = "Yazar Güncelleme İşlemi  Gerçekleştirilemedi.";
+
                 return RedirectToAction("Index");
             }
+            var selectedYazar = _context.Yazarlar.Find(yazar.Id);
 
-            yazar.Name = yazar.Name;
-            yazar.Surname = yazar.Surname;
-            yazar.Age = yazar.Age;
+            selectedYazar.Name = yazar.Name;
+            selectedYazar.Surname = yazar.Surname;
+            selectedYazar.Age = yazar.Age;
+            _context.Yazarlar.Update(selectedYazar);
             _context.SaveChanges();
+
+            TempData["UpdateYazar"] = "Yazar Güncelleme İşlemi Başarıyla  Gerçekleştirildi.";
 
             return RedirectToAction("Index");
         }
@@ -129,11 +144,14 @@ namespace YazarlarveKitaplar.Controllers
             {
                 _context.Yazarlar.Remove(yazar);
                 _context.SaveChanges();
+                TempData["DeleteYazar"] = "Silme İşlemi Başarıyla Gerçekleştirildi.";
+                return RedirectToAction("Index");
             }
-
+            TempData["DeleteYazarWrong"] = "Silme İşlemi  Gerçekleştirilemedi.";
 
             return RedirectToAction("Index");
         }
+
         [HttpGet]
         public IActionResult UpdateTable(int id) 
         {
@@ -144,6 +162,7 @@ namespace YazarlarveKitaplar.Controllers
 
             if (kitap == null)
             {
+                TempData["UpdateTableGetWrong"] = "Seçilen ürüne ait bilgi bulunamadı.";
                 return RedirectToAction("Index");
             }
 
@@ -160,22 +179,28 @@ namespace YazarlarveKitaplar.Controllers
            
             if (!ModelState.IsValid)
             {
+                TempData["UpdateTableWrong"] = "Güncelleme işlemi gerçekleştirilemedi.";
                 return RedirectToAction("Index");
             }
             _context.Kitaplar.Update(kitaplar);
             _context.SaveChanges();
+            TempData["UpdateTable"] = "Güncelleme işlemi başarıyla gerçekleştiriledi.";
             return RedirectToAction("Index");
         }
         public IActionResult DeleteTable(int Id) 
         {
             var table = _context.Kitaplar.Find(Id);
+
             if (table != null)
             {
                 _context.Kitaplar.Remove(table);
                 _context.SaveChanges();
-                
+                TempData["DeleteTable"] = "Silme işlemi başarıyla gerçekleştirildi.";
+                return RedirectToAction("Index");
             }
-           
+
+            TempData["DeleteTableWrong"] = "Silme işlemi gerçekleştirilemedi.";
+
             return RedirectToAction("Index");
 
         }

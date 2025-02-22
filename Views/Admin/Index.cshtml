@@ -1,6 +1,142 @@
-﻿
+﻿﻿@if (TempData["InsertKitap"] != null)
+{
+	<div class="alert alert-success alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Kitap Eklendi!</strong> @TempData["InsertKitap"]
+	</div>
+}
+﻿@if (TempData["InsertKitapWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Kitap Eklenemedi!</strong> @TempData["InsertKitapWrong"]
+	</div>
+}
+@if (TempData["UpdateKitapGetWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Kitap Bulunamadı!</strong> @TempData["UpdateKitapGetWrong"]
+	</div>
+}
+@if (TempData["UpdateKitapWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Kitap Güncellenemedi!</strong> @TempData["UpdateKitapWrong"]
+	</div>
+}
+@if (TempData["UpdateKitap"] != null)
+{
+	<div class="alert alert-success alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Kitap Güncellendi!</strong> @TempData["UpdateKitap"]
+	</div>
+}
+@if (TempData["DeleteKitap"] != null)
+{
+	<div class="alert alert-success alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Kitap Silindi!</strong> @TempData["DeleteKitap"]
+	</div>
+}
+@if (TempData["DeleteKitapWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Kitap Silinemedi!</strong> @TempData["DeleteKitapWrong"]
+	</div>
+}
+@if (TempData["InsertYazarWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Yazar Eklenemedi!</strong> @TempData["InsertYazarWrong"]
+	</div>
+}
+@if (TempData["InsertYazar"] != null)
+{
+	<div class="alert alert-success alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Yazar Eklendi!</strong> @TempData["InsertYazar"]
+	</div>
+}
+@if (TempData["UpdateYazarGetWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Yazar Bilgisi Bulunamadı!</strong> @TempData["UpdateYazarGetWrong"]
+	</div>
+}
+@if (TempData["UpdateYazarWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Yazar Güncellenemedi!</strong> @TempData["UpdateYazarWrong"]
+	</div>
+}
+@if (TempData["UpdateYazar"] != null)
+{
+	<div class="alert alert-success alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Yazar Güncellendi!</strong> @TempData["UpdateYazar"]
+	</div>
+}
+@if (TempData["DeleteYazar"] != null)
+{
+	<div class="alert alert-success alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Yazar Silindi!</strong> @TempData["DeleteYazar"]
+	</div>
+}
+@if (TempData["DeleteYazarWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Yazar Silinemedi!</strong> @TempData["DeleteYazarWrong"]
+	</div>
+}
+@if (TempData["UpdateTableGetWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Ürüne ait bilgi Bulunamadı!</strong> @TempData["UpdateTableGetWrong"]
+	</div>
+}
+@if (TempData["UpdateTableWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Güncelleme Yapılamadı!</strong> @TempData["UpdateTableWrong"]
+	</div>
+}
+@if (TempData["UpdateTable"] != null)
+{
+	<div class="alert alert-success alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Ürün Güncellendi!</strong> @TempData["UpdateTable"]
+	</div>
+}
+@if (TempData["DeleteTable"] != null)
+{
+	<div class="alert alert-success alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Ürün Silindi!</strong> @TempData["DeleteTable"]
+	</div>
+}
+@if (TempData["DeleteTableWrong"] != null)
+{
+	<div class="alert alert-danger alert-dismissible">
+		<button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+		<strong>Ürün Silinemedi!</strong> @TempData["DeleteTableWrong"]
+	</div>
+}
+
+
+
+
 @{
-	ViewData["Title"] = "Admin Page";
+	TempData["Title"] = "Admin Page";
 }
 <div class="container mt-4">
 	<h2 class="text-center">Yazarlar Ve Kitaplar</h2>
